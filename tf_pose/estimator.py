@@ -298,6 +298,7 @@ class PoseEstimator:
 
 
 class TfPoseEstimator:
+    _scaling_strategy = cv2.INTER_LANCZOS4
     # TODO : multi-scale
 
     def __init__(self, graph_path, target_size=(320, 240), tf_config=None):
@@ -411,12 +412,12 @@ class TfPoseEstimator:
         if scale is None:
             if npimg.shape[:2] != (self.target_size[1], self.target_size[0]):
                 # resize
-                npimg = cv2.resize(npimg, self.target_size, interpolation=cv2.INTER_CUBIC)
+                npimg = cv2.resize(npimg, self.target_size, interpolation=self._scaling_strategy)
             return [npimg], [(0.0, 0.0, 1.0, 1.0)]
         elif isinstance(scale, float):
             # scaling with center crop
             base_scale = get_base_scale(scale, img_w, img_h)
-            npimg = cv2.resize(npimg, dsize=None, fx=base_scale, fy=base_scale, interpolation=cv2.INTER_CUBIC)
+            npimg = cv2.resize(npimg, dsize=None, fx=base_scale, fy=base_scale, interpolation=self._scaling_strategy)
 
             o_size_h, o_size_w = npimg.shape[:2]
             if npimg.shape[0] < self.target_size[1] or npimg.shape[1] < self.target_size[0]:
@@ -443,7 +444,7 @@ class TfPoseEstimator:
         elif isinstance(scale, tuple) and len(scale) == 2:
             # scaling with sliding window : (scale, step)
             base_scale = get_base_scale(scale[0], img_w, img_h)
-            npimg = cv2.resize(npimg, dsize=None, fx=base_scale, fy=base_scale, interpolation=cv2.INTER_CUBIC)
+            npimg = cv2.resize(npimg, dsize=None, fx=base_scale, fy=base_scale, interpolation=self._scaling_strategy)
             o_size_h, o_size_w = npimg.shape[:2]
             if npimg.shape[0] < self.target_size[1] or npimg.shape[1] < self.target_size[0]:
                 newimg = np.zeros(
@@ -472,7 +473,7 @@ class TfPoseEstimator:
         elif isinstance(scale, tuple) and len(scale) == 3:
             # scaling with ROI : (want_x, want_y, scale_ratio)
             base_scale = get_base_scale(scale[2], img_w, img_h)
-            npimg = cv2.resize(npimg, dsize=None, fx=base_scale, fy=base_scale, interpolation=cv2.INTER_CUBIC)
+            npimg = cv2.resize(npimg, dsize=None, fx=base_scale, fy=base_scale, interpolation=self._scaling_strategy)
             ratio_w = self.target_size[0] / float(npimg.shape[1])
             ratio_h = self.target_size[1] / float(npimg.shape[0])
 

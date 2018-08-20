@@ -27,8 +27,8 @@ from tensorpack.dataflow.common import BatchData, MapData
 from tensorpack.dataflow.parallel import PrefetchData
 from tensorpack.dataflow.base import RNGDataFlow, DataFlowTerminated
 
-from pycocotools.coco import COCO
-from pose_augment import pose_flip, pose_rotation, pose_to_img, pose_crop_random, \
+from tf_pose.pycocotools.coco import COCO
+from tf_pose.pose_augment import pose_flip, pose_rotation, pose_to_img, pose_crop_random, \
     pose_resize_shortestedge_random, pose_resize_shortestedge_fixed, pose_crop_center, pose_random_scale
 
 logging.getLogger("requests").setLevel(logging.WARNING)
@@ -467,7 +467,7 @@ class DataFlowToQueue(threading.Thread):
 if __name__ == '__main__':
     os.environ['CUDA_VISIBLE_DEVICES'] = ''
 
-    from pose_augment import set_network_input_wh, set_network_scale
+    from tf_pose.pose_augment import set_network_input_wh, set_network_scale
     # set_network_input_wh(368, 368)
     set_network_input_wh(480, 320)
     set_network_scale(8)

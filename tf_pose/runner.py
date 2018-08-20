@@ -24,7 +24,7 @@ def get_estimator(model='cmu', resize='0x0', resize_out_ratio=4.0):
 def infer(image, model='cmu', resize='0x0', resize_out_ratio=4.0):
     """
 
-    :param image:
+    :param image: numpy tensor in BGR format
     :param model:
     :param resize:
     :param resize_out_ratio:

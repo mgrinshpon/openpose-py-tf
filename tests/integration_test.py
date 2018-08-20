@@ -40,10 +40,10 @@ def test_integration():
     assert 0.70 == pytest.approx(chandler_nose.x, abs=_epsilon)
     assert 0.26 == pytest.approx(chandler_nose.y, abs=_epsilon)
 
-    ross = humans[2]
-    assert 10 == ross.part_count()
-    ross_nose = ross.body_parts.get(CocoPart.Nose.value)
-    assert ross_nose is not None
-    assert 0.80 == pytest.approx(ross_nose.score, abs=_epsilon)
-    assert 0.31 == pytest.approx(ross_nose.x, abs=_epsilon)
-    assert 0.28 == pytest.approx(ross_nose.y, abs=_epsilon)
+    joey = humans[2]
+    assert 10 == joey.part_count()
+    joey_nose = joey.body_parts.get(CocoPart.Nose.value)
+    assert joey_nose is not None
+    assert 0.80 == pytest.approx(joey_nose.score, abs=_epsilon)
+    assert 0.31 == pytest.approx(joey_nose.x, abs=_epsilon)
+    assert 0.28 == pytest.approx(joey_nose.y, abs=_epsilon)

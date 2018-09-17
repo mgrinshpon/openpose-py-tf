@@ -323,3 +323,7 @@ pip-selfcheck.json
 
 
 # End of https://www.gitignore.io/api/python,pycharm+all
+
+tests/resources/mattias_kog.avi
+tests/resources/this_is_america.mp4
+tests/resources/kog_pics/*

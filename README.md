@@ -1,24 +1,6 @@
-# tf-pose-estimation
+# openpose-py-tf
 
-'Openpose' for human pose estimation have been implemented using Tensorflow. It also provides several variants that have made some changes to the network structure for **real-time processing on the CPU or low-power embedded devices.**
-
-
-**You can even run this on your macbook with descent FPS!**
-
-Original Repo(Caffe) : https://github.com/CMU-Perceptual-Computing-Lab/openpose
-
-| CMU's Original Model</br> on Macbook Pro 15" | Mobilenet Variant </br>on Macbook Pro 15" | Mobilenet Variant</br>on Jetson TX2 |
-|:---------|:--------------------|:----------------|
-| ![cmu-model](/etcs/openpose_macbook_cmu.gif)     | ![mb-model-macbook](/etcs/openpose_macbook_mobilenet3.gif) | ![mb-model-tx2](/etcs/openpose_tx2_mobilenet3.gif) |
-| **~0.6 FPS** | **~4.2 FPS** @ 368x368 | **~10 FPS** @ 368x368 |
-| 2.8GHz Quad-core i7 | 2.8GHz Quad-core i7 | Jetson TX2 Embedded Board | 
-
-Implemented features are listed here : [features](./etcs/feature.md)
-
-## Important Updates
-
-2018.5.21 Post-processing part is implemented in c++. It is required compiling the part. See: https://github.com/ildoonet/tf-pose-estimation/tree/master/src/pafprocess
-2018.2.7 Arguments in run.py script changed. Support dynamic input size.
+OpenPose is a technique for decomposing images of people into structured graph-like structures. 
 
 ## Install
 
@@ -27,23 +9,16 @@ Implemented features are listed here : [features](./etcs/feature.md)
 You need dependencies below.
 
 - python3
-- tensorflow 1.4.1+
-- opencv3, protobuf, python3-tk
-
-### Opensources
-
-- slim
-- slidingwindow
-  - https://github.com/adamrehn/slidingwindow
-  - I copied from the above git repo to modify few things.
+- pipenv
+- tensorflow
 
 ### Install
 
-Clone the repo and install 3rd-party libraries.
+Clone the repo and install the dependencies.
 
 ```bash
 $ git clone https://www.github.com/ildoonet/tf-openpose
-$ cd tf-openpose
+$ cd openpose-py-tf
 $ pip3 install -r requirements.txt
 ```
 
@@ -53,20 +28,21 @@ $ cd tf_pose/pafprocess
 $ swig -python -c++ pafprocess.i && python3 setup.py build_ext --inplace
 ```
 
-### Package Install
+### Package Development
 
 Alternatively, you can install this repo as a shared package using pip.
 
 ```bash
 $ git clone https://www.github.com/ildoonet/tf-openpose
 $ cd tf-openpose
+$ pipenv install
 $ python setup.py install
 ```
 
 #### Test installed package
 ![package_install_result](./etcs/imgcat0.gif)
 ```bash
-python -c 'import tf_pose; tf_pose.infer(image="./images/p1.jpg")'
+python -c openpose_py_tf
 ```
 
 

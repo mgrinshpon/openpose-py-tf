@@ -1,11 +1,15 @@
 import cv2
 import numpy as np
 import pytest
-from tf_pose import Estimator
-from tf_pose.common import CocoPart
+from openpose_py_tf import Estimator
+from openpose_py_tf.common import CocoPart
 
 
 _epsilon = 1e-2
+
+
+def test_version():
+    print(cv2.__version__)
 
 
 def test_integration():
@@ -47,3 +51,33 @@ def test_integration():
     assert 0.80 == pytest.approx(joey_nose.score, abs=_epsilon)
     assert 0.31 == pytest.approx(joey_nose.x, abs=_epsilon)
     assert 0.28 == pytest.approx(joey_nose.y, abs=_epsilon)
+
+
+def test_video():
+    video_path = "resources/this_is_america.mp4"
+    cap = cv2.VideoCapture(video_path)
+    num_frames_to_skip_per_analysis = 20
+
+    graph_path = "../models/graph/cmu/graph_opt.pb"
+    target_size = (1312, 736)  # Default largest size in width and height
+
+    estimator = Estimator(graph_path, target_size=target_size)
+
+    frame_number = 1
+
+    while cap.isOpened():
+        ret, frame = cap.read()
+        # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        cv2.imshow('frame', frame)
+
+        if frame_number % (num_frames_to_skip_per_analysis + 1) == 0:
+            humans = estimator.inference(np.array(frame), resize_to_default=True, upsample_size=4.0)
+            retval = Estimator.draw_humans(np.array(frame), humans)
+            cv2.imshow("output.png", retval)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+        frame_number = frame_number + 1
+
+    cap.release()
+    cv2.destroyAllWindows()

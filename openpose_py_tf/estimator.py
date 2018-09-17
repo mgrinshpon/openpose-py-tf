@@ -8,15 +8,15 @@ import numpy as np
 import tensorflow as tf
 import time
 
-from tf_pose import common
-from tf_pose.common import CocoPart
-from tf_pose.tensblur.smoother import Smoother
+from openpose_py_tf import common
+from openpose_py_tf.common import CocoPart
+from openpose_py_tf.tensblur.smoother import Smoother
 
 try:
-    from tf_pose.pafprocess import pafprocess
+    from openpose_py_tf.pafprocess import pafprocess
 except ModuleNotFoundError as e:
     print(e)
-    print('you need to build c++ library for pafprocess. See : https://github.com/ildoonet/tf-pose-estimation/tree/master/tf_pose/pafprocess')
+    print('you need to build c++ library for pafprocess. See : https://github.com/ildoonet/tf-pose-estimation/tree/master/openpose_py_tf/pafprocess')
     exit(-1)
 
 logger = logging.getLogger('TfPoseEstimator')
